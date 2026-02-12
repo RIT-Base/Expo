@@ -2,53 +2,174 @@
 layout: default
 ---
 
-<header class="hero">
-  <div class="container">
-    <h1>{{ site.data.event.current_name }}</h1>
-    <p>{{ site.data.event.current_desc }}</p>
-  </div>
-</header>
+<section class="relative bg-gray-900 group h-[250px] sm:h-[400px] md:h-[650px] overflow-hidden">
+  
+  <div id="carouselContainer" class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar w-full h-full">
+    {% for slug in site.data.event.carousel_karya %}
+      {% assign item = site.karya | where: "slug", slug | first %}
+      {% if item %}
+      <div class="min-w-full snap-center relative flex items-center justify-center bg-black">
+        
+        <img src="{{ item.hero_image }}" 
+             alt="{{ item.title }}" 
+             class="absolute inset-0 w-full h-full object-cover opacity-60 transition duration-1000 group-hover:scale-105">
+        
+        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-black/40"></div>
 
-<section class="featured-section">
-  <div class="container">
-    <h2 class="section-title">Karya Unggulan Saat Ini</h2>
-    
-    <div class="grid-karya">
-      {% assign featured_slugs = site.data.event.featured_karya %}
-      
-      {% for slug in featured_slugs %}
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto mt-4 md:mt-10">
+          <span class="inline-block px-3 py-1 mb-2 md:mb-6 text-[8px] md:text-[10px] font-bold tracking-[0.2em] text-white uppercase bg-accent/80 backdrop-blur-sm rounded-full border border-white/20">
+            Unggulan
+          </span>
+          <h1 class="text-2xl md:text-7xl font-extrabold text-white mb-2 md:mb-4 tracking-tight drop-shadow-2xl leading-tight">
+            {{ item.title }}
+          </h1>
+          <p class="text-xs md:text-xl text-gray-300 font-light mb-4 md:mb-8 max-w-2xl mx-auto md:border-l-2 md:border-accent md:pl-4 italic hidden sm:block">
+            "{{ item.description | truncate: 100 }}"
+          </p>
+          
+          <a href="{{ site.baseurl }}{{ item.url }}" 
+             class="inline-flex items-center px-4 py-2 md:px-8 md:py-3 bg-white text-gray-900 font-bold text-xs md:text-base rounded-full hover:bg-gray-200 transition transform hover:-translate-y-1 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+             Lihat Detail
+          </a>
+        </div>
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <button onclick="scrollCarousel(-1)" class="hidden md:block absolute left-8 top-1/2 -translate-y-1/2 p-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white hover:text-black z-20 cursor-pointer">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+  </button>
+  <button onclick="scrollCarousel(1)" class="hidden md:block absolute right-8 top-1/2 -translate-y-1/2 p-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white hover:text-black z-20 cursor-pointer">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+  </button>
+
+  <div class="absolute bottom-4 md:bottom-8 left-0 right-0 flex justify-center gap-2 md:gap-3 z-20">
+    {% for slug in site.data.event.carousel_karya %}
+      <button onclick="scrollToIndex({{ forloop.index0 }})" class="carousel-dot w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white/30 transition-all duration-500 cursor-pointer" data-index="{{ forloop.index0 }}"></button>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="py-10 md:py-16 px-4 md:px-8 bg-white">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex items-end justify-between mb-8 border-b border-gray-100 pb-4">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">Sedang Tampil</h2>
+        <p class="text-sm md:text-base text-slate-500 mt-1">{{ site.data.event.current_name }}</p>
+      </div>
+      <div class="hidden md:block h-1 w-20 bg-accent rounded-full"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      {% for slug in site.data.event.current_karya %}
         {% assign karya = site.karya | where: "slug", slug | first %}
         {% if karya %}
-          <a href="{{ site.baseurl }}{{ karya.url }}" class="card">
-            <div class="card-img" style="background-image: url('{{ karya.hero_image }}');"></div>
-            <div class="card-body">
-              <span class="badge">{{ karya.category }}</span>
-              <h3>{{ karya.title }}</h3>
-              <p class="author">Oleh: {{ karya.author }}</p>
+          <a href="{{ site.baseurl }}{{ karya.url }}" class="group block bg-white rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-blue-900/10 transition duration-300 border border-gray-100 flex flex-col h-full">
+            <div class="relative w-full aspect-[4/3] bg-gray-200 overflow-hidden">
+              <img src="{{ karya.hero_image }}" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0">
+              <div class="absolute top-3 right-3 bg-white/90 backdrop-blur px-2 py-1 rounded text-[10px] font-bold text-slate-800 shadow-sm uppercase z-10">
+                {{ karya.category }}
+              </div>
+            </div>
+            <div class="p-5 flex flex-col flex-1">
+              <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-accent transition">{{ karya.title }}</h3>
+              
+              <p class="text-sm text-slate-500 mb-4 line-clamp-2 leading-relaxed">
+                {{ karya.description }}
+              </p>
+
+              <div class="mt-auto flex items-center text-sm text-slate-500 pt-4 border-t border-gray-50">
+                {% if karya.author_image %}
+                  <img src="{{ karya.author_image }}" alt="{{ karya.author }}" class="w-6 h-6 rounded-full object-cover mr-2 border border-gray-200">
+                {% else %}
+                  <span class="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-[10px] font-bold mr-2 text-gray-600">
+                     {{ karya.author | slice: 0 }}
+                  </span>
+                {% endif %}
+                <span class="font-medium text-slate-700">{{ karya.author }}</span>
+              </div>
             </div>
           </a>
         {% endif %}
       {% endfor %}
     </div>
-
   </div>
 </section>
 
-<section class="archive-section">
-  <div class="container">
-    <h2 class="section-title">Arsip Karya Lainnya</h2>
-    <div class="grid-karya">
-        {% for karya in site.karya %}
-          {% unless featured_slugs contains karya.slug %}
-            <a href="{{ site.baseurl }}{{ karya.url }}" class="card">
-                <div class="card-img" style="background-image: url('{{ karya.hero_image }}');"></div>
-                <div class="card-body">
-                  <span class="badge">{{ karya.category }}</span>
-                  <h3>{{ karya.title }}</h3>
-                </div>
-            </a>
-          {% endunless %}
-        {% endfor %}
-    </div>
-  </div>
-</section>
+<script>
+  // --- 1. CAROUSEL LOGIC ---
+  const container = document.getElementById('carouselContainer');
+  const dots = document.querySelectorAll('.carousel-dot');
+
+  // Scroll Button Logic (Desktop Click)
+  function scrollCarousel(direction) {
+    const slideWidth = container.clientWidth;
+    container.scrollBy({ left: direction * slideWidth, behavior: 'smooth' });
+  }
+
+  function scrollToIndex(index) {
+    const slideWidth = container.clientWidth;
+    container.scrollTo({ left: index * slideWidth, behavior: 'smooth' });
+  }
+
+  // Active Dot Logic (Scroll Detection)
+  container.addEventListener('scroll', () => {
+    // Hitung index aktif berdasarkan posisi scroll
+    const index = Math.round(container.scrollLeft / container.clientWidth);
+    
+    dots.forEach((dot, i) => {
+      if (i === index) {
+        dot.classList.remove('bg-white/30', 'w-2');
+        dot.classList.add('bg-accent', 'w-8'); // Dot jadi panjang saat aktif
+      } else {
+        dot.classList.add('bg-white/30', 'w-2');
+        dot.classList.remove('bg-accent', 'w-8');
+      }
+    });
+  });
+
+  // --- 2. SEARCH & FILTER LOGIC ---
+  function filterKarya() {
+    let input = document.getElementById('searchInput').value.toLowerCase();
+    let items = document.getElementsByClassName('karya-item');
+    let visibleCount = 0;
+    
+    for (let i = 0; i < items.length; i++) {
+      let titleText = items[i].getAttribute('data-title');
+      if (titleText.includes(input)) {
+        items[i].style.display = ""; 
+        visibleCount++;
+      } else {
+        items[i].style.display = "none";
+      }
+    }
+    document.getElementById('noResults').classList.toggle('hidden', visibleCount > 0);
+  }
+
+  function filterCategory(cat, btn) {
+    // Reset Style Tombol
+    let buttons = document.getElementsByClassName('filter-btn');
+    for(let b of buttons) {
+        b.className = "filter-btn whitespace-nowrap px-6 py-2 rounded-full text-sm font-bold bg-white text-slate-600 border border-slate-200 hover:border-accent hover:text-accent transition cursor-pointer";
+    }
+    // Set Active Style
+    btn.className = "filter-btn active whitespace-nowrap px-6 py-2 rounded-full text-sm font-bold bg-accent text-white shadow-lg shadow-blue-500/30 transition transform scale-105 cursor-pointer";
+
+    let items = document.getElementsByClassName('karya-item');
+    document.getElementById('searchInput').value = ""; // Bersihkan search box
+    let visibleCount = 0;
+
+    for (let i = 0; i < items.length; i++) {
+      let itemCat = items[i].getAttribute('data-category');
+      
+      if (cat === 'all' || itemCat.includes(cat)) {
+        items[i].style.display = "";
+        visibleCount++;
+      } else {
+        items[i].style.display = "none";
+      }
+    }
+    document.getElementById('noResults').classList.toggle('hidden', visibleCount > 0);
+  }
+</script>

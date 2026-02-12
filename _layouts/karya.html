@@ -2,33 +2,84 @@
 layout: default
 ---
 
-<article class="karya-detail">
-  <div class="karya-hero" style="background-image: url('{{ page.hero_image }}');">
-    <div class="overlay">
-      <div class="container">
-        <nav class="breadcrumb">
-          <a href="{{ site.baseurl }}/">Home</a> &gt; <span>{{ page.title }}</span>
-        </nav>
-        <h1>{{ page.title }}</h1>
-        <div class="meta">
-            <span class="badge-lg">{{ page.category }}</span>
-            <span class="author-name">
-                Creator: <a href="{{ page.author_link | default: '#' }}">{{ page.author }}</a>
-            </span>
+<article class="bg-white min-h-screen pb-20">
+  
+  <div class="relative h-[400px] md:h-[500px] w-full bg-gray-900">
+    <img src="{{ page.hero_image }}" alt="{{ page.title }}" class="w-full h-full object-cover opacity-80">
+    <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-black/30"></div>
+    
+    <div class="absolute bottom-0 left-0 w-full p-4 md:p-8">
+      <div class="max-w-7xl mx-auto">
+        <a href="{{ site.baseurl }}/" class="inline-flex items-center text-white/80 hover:text-white mb-4 text-sm font-medium transition">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+          Kembali ke Beranda
+        </a>
+        <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 mb-2 drop-shadow-sm leading-tight">
+          {{ page.title }}
+        </h1>
+        <div class="flex items-center gap-4 text-slate-600 font-medium">
+          <span class="bg-accent/10 text-accent px-3 py-1 rounded text-sm uppercase tracking-wider font-bold">{{ page.category }}</span>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="container content-wrapper">
-    <div class="content-body">
-      {{ content }}
+  <div class="max-w-7xl mx-auto px-4 md:px-8 mt-12 grid grid-cols-1 lg:grid-cols-12 gap-12">
+    
+    <div class="lg:col-span-8 order-2 lg:order-1">
+      <div class="prose prose-lg prose-slate max-w-none text-slate-700 leading-relaxed">
+        <h3 class="text-2xl font-bold text-slate-900 mb-4 border-l-4 border-accent pl-4">Tentang Karya</h3>
+        
+        {{ content }}
+        
+        </div>
     </div>
 
-    {% if page.demo_link %}
-    <div class="cta-area">
-      <a href="{{ page.demo_link }}" class="btn-primary" target="_blank">Lihat Karya / Demo</a>
+    <div class="lg:col-span-4 order-1 lg:order-2">
+      <div class="sticky top-24 space-y-8">
+        
+            <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-xl shadow-gray-200/50">
+            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Dibuat Oleh</h4>
+            <div class="flex items-center gap-4 mb-6">
+                
+                {% if page.author_image %}
+                <img src="{{ page.author_image }}" alt="{{ page.author }}" class="w-14 h-14 rounded-full object-cover border-2 border-white shadow-md">
+                {% else %}
+                <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-accent to-blue-400 flex items-center justify-center text-white font-bold text-2xl shadow-lg">
+                    {{ page.author | slice: 0 }}
+                </div>
+                {% endif %}
+
+                <div>
+                <p class="text-lg font-bold text-slate-900 leading-tight">{{ page.author }}</p>
+                <a href="{{ page.author_link | default: '#' }}" class="text-sm text-accent hover:underline mt-1 inline-block">Lihat Profil</a>
+                </div>
+            </div>
+            
+            <hr class="border-gray-100 my-4">
+            
+            {% if page.demo_link %}
+            <a href="{{ page.demo_link }}" target="_blank" class="block w-full text-center py-4 bg-primary text-white font-bold rounded-xl hover:bg-slate-800 transition transform hover:-translate-y-1 shadow-lg shadow-slate-900/20">
+                Buka Demo / Aplikasi
+            </a>
+            {% else %}
+            <button disabled class="block w-full text-center py-4 bg-gray-100 text-gray-400 font-bold rounded-xl cursor-not-allowed">
+                Demo Tidak Tersedia
+            </button>
+            {% endif %}
+            </div>
+
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100">
+           <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Bagikan</h4>
+           <div class="flex gap-2">
+             <button class="flex-1 py-2 bg-white border rounded text-sm font-medium hover:bg-gray-50">Twitter</button>
+             <button class="flex-1 py-2 bg-white border rounded text-sm font-medium hover:bg-gray-50">WhatsApp</button>
+           </div>
+        </div>
+
+      </div>
     </div>
-    {% endif %}
+
   </div>
+
 </article>

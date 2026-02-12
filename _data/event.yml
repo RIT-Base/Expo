@@ -3,7 +3,13 @@ current_name: "Kunjungan SMK Al-Madani"
 current_desc: "Tur kunjungan kampus dari SMK Al-Madani ke Universitas Garut."
 status: "active" # active / archive
 
-# Daftar 'slug' (nama file tanpa .md) karya yang ingin tampil di halaman depan
-# Urutan di sini menentukan urutan tampilan di website.
-featured_karya:
+# 1. CAROUSEL (Karya Paling Top / Highlight Utama)
+# Masukkan slug (nama file tanpa .md)
+carousel_karya:
   - "tes"
+  - "tes2"
+
+# 2. SEDANG TAMPIL (List Grid di bawah carousel)
+current_karya:
+  - "tes"
+  - "tes2"
