@@ -1,6 +1,6 @@
 title: "FKOMINFO UNIGA Expo"
 description: "Katalog Pameran Karya & Inovasi Mahasiswa Fakultas Komunikasi dan Informasi di Universitas Garut"
-baseurl: "/expo" 
+baseurl: "/Expo" 
 url: "https://rit-base.github.io" 
 
 # Konfigurasi Collections (Agar folder _karya terbaca)
