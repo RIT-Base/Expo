@@ -1,0 +1,9 @@
+# Info Event yang Sedang Berlangsung (dimana website digunakan)
+current_name: "Kunjungan SMK Al-Madani"
+current_desc: "Tur kunjungan kampus dari SMK Al-Madani ke Universitas Garut."
+status: "active" # active / archive
+
+# Daftar 'slug' (nama file tanpa .md) karya yang ingin tampil di halaman depan
+# Urutan di sini menentukan urutan tampilan di website.
+featured_karya:
+  - "tes"

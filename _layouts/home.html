@@ -1,0 +1,54 @@
+---
+layout: default
+---
+
+<header class="hero">
+  <div class="container">
+    <h1>{{ site.data.event.current_name }}</h1>
+    <p>{{ site.data.event.current_desc }}</p>
+  </div>
+</header>
+
+<section class="featured-section">
+  <div class="container">
+    <h2 class="section-title">Karya Unggulan Saat Ini</h2>
+    
+    <div class="grid-karya">
+      {% assign featured_slugs = site.data.event.featured_karya %}
+      
+      {% for slug in featured_slugs %}
+        {% assign karya = site.karya | where: "slug", slug | first %}
+        {% if karya %}
+          <a href="{{ site.baseurl }}{{ karya.url }}" class="card">
+            <div class="card-img" style="background-image: url('{{ karya.hero_image }}');"></div>
+            <div class="card-body">
+              <span class="badge">{{ karya.category }}</span>
+              <h3>{{ karya.title }}</h3>
+              <p class="author">Oleh: {{ karya.author }}</p>
+            </div>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+<section class="archive-section">
+  <div class="container">
+    <h2 class="section-title">Arsip Karya Lainnya</h2>
+    <div class="grid-karya">
+        {% for karya in site.karya %}
+          {% unless featured_slugs contains karya.slug %}
+            <a href="{{ site.baseurl }}{{ karya.url }}" class="card">
+                <div class="card-img" style="background-image: url('{{ karya.hero_image }}');"></div>
+                <div class="card-body">
+                  <span class="badge">{{ karya.category }}</span>
+                  <h3>{{ karya.title }}</h3>
+                </div>
+            </a>
+          {% endunless %}
+        {% endfor %}
+    </div>
+  </div>
+</section>
