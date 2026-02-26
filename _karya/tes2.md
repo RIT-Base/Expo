@@ -4,7 +4,7 @@ title: "Test2"
 slug: "tes2"  # Harus sama dengan yang ada di _data/event.yml
 author: "Kazuki Fujimaru"
 author_link: "https://github.com/kazukifujimaru"
-author_image:"#"
+author_image: "#"
 category: "test"
 event_tag: "Galaksi 2026" # Penanda awal mula karya debut
 # Gunakan path yang benar untuk menampilkan gambar

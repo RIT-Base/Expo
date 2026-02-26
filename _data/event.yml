@@ -6,10 +6,10 @@ status: "active" # active / archive
 # 1. CAROUSEL (Karya Paling Top / Highlight Utama)
 # Masukkan slug (nama file tanpa .md)
 carousel_karya:
-  - "tes"
+  - "mozybit"
   - "tes2"
 
 # 2. SEDANG TAMPIL (List Grid di bawah carousel)
 current_karya:
-  - "tes"
+  - "mozybit"
   - "tes2"
