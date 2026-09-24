@@ -2,79 +2,440 @@
 layout: default
 ---
 
-<article class="bg-white min-h-screen pb-20">
+<article class="bg-white min-h-screen pb-24">
   
-  <div class="relative h-[300px] md:h-[500px] w-full bg-gray-900">
-    <img src="{{ page.hero_image }}" alt="{{ page.title }}" class="w-full h-full object-cover opacity-80">
-    <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-black/30"></div>
+  <!-- Semantic Category Badge Mapping -->
+  {% assign cat_lower = page.category | downcase %}
+  {% if cat_lower contains 'web' %}
+    {% assign detail_cat_badge = 'bg-blue-50 text-blue-700 border-blue-200' %}
+  {% elsif cat_lower contains 'iot' %}
+    {% assign detail_cat_badge = 'bg-emerald-50 text-emerald-700 border-emerald-200' %}
+  {% elsif cat_lower contains 'game' %}
+    {% assign detail_cat_badge = 'bg-purple-50 text-purple-700 border-purple-200' %}
+  {% elsif cat_lower contains 'cyber' or cat_lower contains 'sec' %}
+    {% assign detail_cat_badge = 'bg-rose-50 text-rose-700 border-rose-200' %}
+  {% else %}
+    {% assign detail_cat_badge = 'bg-slate-100 text-slate-700 border-slate-200' %}
+  {% endif %}
+
+  <!-- 1. HERO HEADER WITH HIGH CONTRAST -->
+  <div class="relative h-[320px] md:h-[480px] w-full bg-slate-950 overflow-hidden">
+    {% if page.hero_image %}
+    <img src="{{ page.hero_image | relative_url }}" alt="{{ page.title }}" class="w-full h-full object-cover opacity-65">
+    {% endif %}
     
-    <div class="absolute bottom-0 left-0 w-full p-4 md:p-8">
+    <!-- Gradient Overlay for Perfect Contrast -->
+    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/70 to-black/30"></div>
+    
+    <div class="absolute bottom-0 left-0 w-full p-4 sm:p-6 md:p-10">
       <div class="max-w-7xl mx-auto">
-        <a href="{{ site.baseurl }}/" class="inline-flex items-center text-white/80 hover:text-white mb-4 text-sm font-medium transition">
-          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-          Kembali ke Beranda
+        
+        <!-- Back to Home Pill Button -->
+        <a href="{{ site.baseurl }}/" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/50 backdrop-blur-md text-white/90 text-xs font-semibold hover:bg-black/75 hover:text-white transition mb-4 border border-white/15">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          <span>Kembali ke Beranda</span>
         </a>
-        <h1 class="text-3xl md:text-6xl font-extrabold text-slate-900 mb-2 drop-shadow-sm leading-tight">
+
+        <!-- Title -->
+        <h1 class="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-3 tracking-tight drop-shadow-md leading-tight">
           {{ page.title }}
         </h1>
-        <div class="flex items-center gap-4 text-slate-600 font-medium">
-          <span class="bg-accent/10 text-accent px-3 py-1 rounded text-sm uppercase tracking-wider font-bold">{{ page.category }}</span>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="max-w-7xl mx-auto px-4 md:px-8 mt-8 md:mt-12 grid grid-cols-1 lg:grid-cols-12 gap-12">
-    
-    <div class="lg:col-span-8 order-2 lg:order-1">
-      <div class="prose prose-lg prose-slate max-w-none text-slate-700 leading-relaxed">
-        <h3 class="text-2xl font-bold text-slate-900 mb-4 border-l-4 border-accent pl-4">Tentang Karya</h3>
-        
-        {{ content }}
-        
-      </div>
-    </div>
+        <!-- Metadata Badges -->
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="inline-flex items-center px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider shadow-sm border backdrop-blur-md {{ detail_cat_badge }}">
+            {{ page.category }}
+          </span>
 
-    <div class="lg:col-span-4 order-1 lg:order-2">
-      <div class="sticky top-24 space-y-8">
-        
-        <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-xl shadow-gray-200/50">
-          <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Dibuat Oleh</h4>
-          <div class="flex items-center gap-4 mb-6">
-            
-            <div class="relative w-14 h-14">
-                <div class="absolute inset-0 w-full h-full rounded-full bg-gradient-to-tr from-accent to-blue-400 flex items-center justify-center text-white font-bold text-2xl shadow-lg">
-                    {{ page.author | slice: 0 }}
-                </div>
-                {% if page.author_image %}
-                <img src="{{ page.author_image }}" 
-                     alt="{{ page.author }}"
-                     onerror="this.style.display='none'"
-                     class="absolute inset-0 w-full h-full rounded-full object-cover border-2 border-white shadow-md z-10">
-                {% endif %}
-            </div>
-
-            <div>
-              <p class="text-lg font-bold text-slate-900 leading-tight">{{ page.author }}</p>
-              <a href="{{ page.author_link | default: '#' }}" class="text-sm text-accent hover:underline mt-1 inline-block">Lihat Profil</a>
-            </div>
-          </div>
-          
-          <hr class="border-gray-100 my-4">
-          
-          {% if page.demo_link %}
-          <a href="{{ page.demo_link }}" target="_blank" class="block w-full text-center py-4 bg-primary text-white font-bold rounded-xl hover:bg-slate-800 transition transform hover:-translate-y-1 shadow-lg shadow-slate-900/20">
-            Buka Demo / Aplikasi
-          </a>
-          {% else %}
-          <button disabled class="block w-full text-center py-4 bg-gray-100 text-gray-400 font-bold rounded-xl cursor-not-allowed">
-            Demo Tidak Tersedia
-          </button>
+          {% if page.event_tag %}
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-white/10 backdrop-blur-md text-white/90 border border-white/20">
+            <svg class="w-3.5 h-3.5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            <span>{{ page.event_tag }}</span>
+          </span>
           {% endif %}
         </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. MAIN CONTENT & SIDEBAR -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 md:mt-14 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12">
+    
+    <!-- LEFT: Article Body & Gallery -->
+    <div class="lg:col-span-8 order-2 lg:order-1">
+      <div class="prose prose-slate max-w-none text-slate-700 leading-relaxed prose-headings:font-bold prose-headings:text-slate-900 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline">
+        <h3 class="text-2xl font-bold text-slate-900 mb-6 border-l-4 border-blue-600 pl-4">Tentang Karya</h3>
+        
+        {{ content }}
+      </div>
+
+      <!-- FOOTAGE & DOKUMENTASI GALLERY -->
+      {% if page.gallery and page.gallery.size > 0 %}
+      <div class="mt-14 pt-10 border-t border-slate-200">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-2xl font-bold text-slate-900 border-l-4 border-blue-600 pl-4">Dokumentasi & Footage</h3>
+          <span class="text-xs text-slate-400 font-medium hidden sm:inline-flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+            </svg>
+            Klik foto untuk memperbesar
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {% for item in page.gallery %}
+          {% if item.image %}
+            {% assign item_url = item.image | relative_url %}
+            {% assign item_cap = item.caption | default: page.title %}
+          {% else %}
+            {% assign item_url = item | relative_url %}
+            {% assign item_cap = page.title %}
+          {% endif %}
+          <div class="group overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-50 shadow-sm hover:shadow-md transition cursor-pointer" onclick="openLightbox({{ forloop.index0 }})">
+            <div class="aspect-video overflow-hidden bg-slate-100 relative">
+              <img src="{{ item_url }}" alt="{{ item_cap }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy">
+              <!-- Hover Zoom Hint Overlay -->
+              <div class="absolute inset-0 bg-slate-950/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span class="p-2.5 rounded-full bg-black/60 backdrop-blur-md text-white shadow-lg transform scale-90 group-hover:scale-100 transition-transform">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
+                  </svg>
+                </span>
+              </div>
+            </div>
+            {% if item.caption %}
+            <p class="p-3.5 text-xs md:text-sm text-slate-600 font-medium bg-white border-t border-slate-100 leading-snug">
+              {{ item.caption }}
+            </p>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- RIGHT: Interactive Sidebar & Metadata -->
+    <div class="lg:col-span-4 order-1 lg:order-2">
+      <div class="sticky top-24 space-y-6">
+        
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xl shadow-slate-200/40">
+          
+          <!-- Contributor / Creator Block -->
+          <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Dibuat Oleh</h4>
+          <div class="flex items-center gap-4 mb-6">
+            <div class="relative w-14 h-14 shrink-0">
+              <div class="w-full h-full rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white font-bold text-2xl shadow-md">
+                {{ page.author | slice: 0 }}
+              </div>
+              {% if page.author_image and page.author_image != '#' %}
+              <img src="{{ page.author_image }}" 
+                   alt="{{ page.author }}" 
+                   onerror="this.style.display='none'"
+                   class="absolute inset-0 w-full h-full rounded-full object-cover border-2 border-white shadow-md z-10">
+              {% endif %}
+            </div>
+
+            <div class="min-w-0">
+              <p class="text-base font-bold text-slate-900 leading-snug truncate">{{ page.author }}</p>
+              {% if page.author_link and page.author_link != '#' %}
+              <a href="{{ page.author_link }}" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline mt-1 inline-flex items-center gap-1">
+                <span>Lihat Profil</span>
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+              </a>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Additional Contributors if available -->
+          {% if page.contributors %}
+          <div class="pt-4 border-t border-slate-100 mb-6">
+            <h5 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Kontributor Tim</h5>
+            <p class="text-xs sm:text-sm text-slate-700 font-medium leading-relaxed">{{ page.contributors }}</p>
+          </div>
+          {% endif %}
+
+          <hr class="border-slate-100 my-5">
+          
+          <!-- Dynamic Action Buttons -->
+          <div class="space-y-3">
+            {% if page.demo_link %}
+              {% if page.demo_link contains "github.com" and page.demo_label == nil %}
+                <a href="{{ page.demo_link }}" target="_blank" rel="noopener noreferrer" class="w-full flex items-center justify-center gap-2 py-3.5 px-4 bg-slate-900 text-white font-bold text-sm rounded-xl hover:bg-slate-800 transition transform hover:-translate-y-0.5 shadow-md shadow-slate-900/20 cursor-pointer">
+                  <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
+                  </svg>
+                  <span>Kunjungi Repositori GitHub</span>
+                </a>
+              {% else %}
+                <a href="{{ page.demo_link }}" target="_blank" rel="noopener noreferrer" class="w-full flex items-center justify-center gap-2 py-3.5 px-4 bg-blue-600 text-white font-bold text-sm rounded-xl hover:bg-blue-700 transition transform hover:-translate-y-0.5 shadow-md shadow-blue-600/25 cursor-pointer">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                  </svg>
+                  <span>{{ page.demo_label | default: 'Buka Demo / Aplikasi' }}</span>
+                </a>
+              {% endif %}
+            {% endif %}
+
+            {% if page.repo_link and page.repo_link != page.demo_link %}
+              <a href="{{ page.repo_link }}" target="_blank" rel="noopener noreferrer" class="w-full flex items-center justify-center gap-2 py-3 px-4 bg-slate-900 text-white font-bold text-sm rounded-xl hover:bg-slate-800 transition transform hover:-translate-y-0.5 shadow-md shadow-slate-900/20 cursor-pointer">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
+                </svg>
+                <span>Lihat Repositori GitHub</span>
+              </a>
+            {% endif %}
+
+            {% if page.demo_link == nil and page.repo_link == nil %}
+              <div class="w-full flex items-center justify-center gap-2 py-3.5 px-4 bg-slate-100 text-slate-500 font-semibold text-xs rounded-xl border border-slate-200">
+                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                </svg>
+                <span>Dokumentasi & Arsip Karya Fisik</span>
+              </div>
+            {% endif %}
+          </div>
+
+          <!-- Tech Stack Tags if available -->
+          {% if page.tech_stack %}
+          <div class="mt-6 pt-5 border-t border-slate-100">
+            <h5 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2.5">Tech Stack</h5>
+            <div class="flex flex-wrap gap-1.5">
+              {% if page.tech_stack.first %}
+                {% for tech in page.tech_stack %}
+                  <span class="px-2.5 py-1 text-xs font-medium bg-slate-100 text-slate-700 rounded-md border border-slate-200">{{ tech }}</span>
+                {% endfor %}
+              {% else %}
+                {% assign techs = page.tech_stack | split: "," %}
+                {% for tech in techs %}
+                  <span class="px-2.5 py-1 text-xs font-medium bg-slate-100 text-slate-700 rounded-md border border-slate-200">{{ tech | strip }}</span>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+
+        </div>
+
       </div>
     </div>
 
   </div>
+
+  <!-- 3. WHATSAPP-STYLE INTERACTIVE MEDIA LIGHTBOX -->
+  {% if page.gallery and page.gallery.size > 0 %}
+  <div id="mediaLightbox" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col justify-between hidden opacity-0 transition-opacity duration-300 select-none" role="dialog" aria-modal="true" aria-hidden="true">
+    
+    <!-- Top Bar: Counter & Close Button -->
+    <div class="flex items-center justify-between px-4 sm:px-6 py-4 z-20">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+        <span id="lightboxCounter" class="text-xs sm:text-sm font-semibold text-white/80 tracking-wide">
+          Foto 1 dari {{ page.gallery.size }}
+        </span>
+      </div>
+      <button onclick="closeLightbox()" aria-label="Tutup Media Viewer" class="p-2 sm:p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white/90 hover:text-white transition cursor-pointer backdrop-blur-md focus:outline-none">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Center Stage: Main Active Image & Nav Arrows -->
+    <div id="lightboxStage" class="relative flex-1 flex items-center justify-center p-3 sm:p-6 overflow-hidden select-none cursor-pointer" onclick="handleBackdropClick(event)">
+      
+      <!-- Prev Button (Desktop) -->
+      <button onclick="prevLightbox(event)" aria-label="Foto Sebelumnya" class="hidden md:flex items-center justify-center absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 text-white transition cursor-pointer backdrop-blur-md z-20 shadow-lg focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+
+      <!-- Main Active Image -->
+      <img id="lightboxMainImg" src="" alt="" class="max-h-[58vh] sm:max-h-[68vh] max-w-[95vw] sm:max-w-[85vw] w-auto object-contain rounded-lg shadow-2xl transition-all duration-200 pointer-events-auto cursor-default" onclick="event.stopPropagation()">
+
+      <!-- Next Button (Desktop) -->
+      <button onclick="nextLightbox(event)" aria-label="Foto Selanjutnya" class="hidden md:flex items-center justify-center absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 text-white transition cursor-pointer backdrop-blur-md z-20 shadow-lg focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Bottom Bar: Caption & WhatsApp-Style Thumbnail Strip -->
+    <div class="px-4 sm:px-6 pb-4 sm:pb-6 z-20 flex flex-col items-center max-w-4xl mx-auto w-full">
+      <!-- Caption Box -->
+      <div id="lightboxCaption" class="bg-black/60 backdrop-blur-md text-white/90 text-xs sm:text-sm px-4 py-2 rounded-xl text-center mb-3 border border-white/10 shadow-lg leading-relaxed max-w-2xl min-h-[1.5rem] flex items-center justify-center">
+      </div>
+
+      <!-- Thumbnail Strip -->
+      <div id="lightboxThumbStrip" class="flex items-center justify-center gap-2 overflow-x-auto py-1 px-2 no-scrollbar max-w-full">
+        {% for item in page.gallery %}
+        {% if item.image %}
+          {% assign t_url = item.image | relative_url %}
+        {% else %}
+          {% assign t_url = item | relative_url %}
+        {% endif %}
+        <button type="button" onclick="goToLightbox({{ forloop.index0 }})" class="lightbox-thumb shrink-0 w-12 h-10 sm:w-16 sm:h-12 rounded-lg overflow-hidden border-2 transition-all duration-200 cursor-pointer focus:outline-none opacity-40 hover:opacity-80 border-transparent" data-index="{{ forloop.index0 }}" aria-label="Lihat Foto {{ forloop.index }}">
+          <img src="{{ t_url }}" alt="Thumb {{ forloop.index }}" class="w-full h-full object-cover pointer-events-none">
+        </button>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JavaScript Controller -->
+  <script>
+    (function() {
+      const galleryData = [
+        {% for item in page.gallery %}
+        {
+          {% if item.image %}
+          image: "{{ item.image | relative_url }}",
+          caption: {{ item.caption | default: '' | jsonify }}
+          {% else %}
+          image: "{{ item | relative_url }}",
+          caption: {{ page.title | jsonify }}
+          {% endif %}
+        }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      ];
+
+      let currentIndex = 0;
+      const lightbox = document.getElementById('mediaLightbox');
+      const mainImg = document.getElementById('lightboxMainImg');
+      const counter = document.getElementById('lightboxCounter');
+      const caption = document.getElementById('lightboxCaption');
+      const thumbs = document.querySelectorAll('.lightbox-thumb');
+      const total = galleryData.length;
+
+      function renderSlide(index) {
+        if (!galleryData[index]) return;
+        currentIndex = index;
+
+        // Image
+        mainImg.src = galleryData[index].image;
+        mainImg.alt = galleryData[index].caption || `Foto ${index + 1}`;
+
+        // Counter
+        if (counter) {
+          counter.textContent = `Foto ${index + 1} dari ${total}`;
+        }
+
+        // Caption
+        if (caption) {
+          if (galleryData[index].caption && galleryData[index].caption.trim() !== '') {
+            caption.textContent = galleryData[index].caption;
+            caption.classList.remove('hidden');
+          } else {
+            caption.textContent = '';
+            caption.classList.add('hidden');
+          }
+        }
+
+        // Update Thumbnails Active Ring
+        thumbs.forEach((th, i) => {
+          if (i === index) {
+            th.className = "lightbox-thumb shrink-0 w-12 h-10 sm:w-16 sm:h-12 rounded-lg overflow-hidden border-2 transition-all duration-200 cursor-pointer focus:outline-none border-blue-500 ring-2 ring-blue-500/50 scale-105 opacity-100";
+            th.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+          } else {
+            th.className = "lightbox-thumb shrink-0 w-12 h-10 sm:w-16 sm:h-12 rounded-lg overflow-hidden border-2 transition-all duration-200 cursor-pointer focus:outline-none border-transparent opacity-40 hover:opacity-80";
+          }
+        });
+      }
+
+      window.openLightbox = function(index) {
+        if (!lightbox) return;
+        renderSlide(index);
+        lightbox.classList.remove('hidden');
+        lightbox.setAttribute('aria-hidden', 'false');
+        // Force reflow for fade transition
+        void lightbox.offsetWidth;
+        lightbox.classList.remove('opacity-0');
+        lightbox.classList.add('opacity-100');
+        document.body.style.overflow = 'hidden';
+      };
+
+      window.closeLightbox = function() {
+        if (!lightbox) return;
+        lightbox.classList.remove('opacity-100');
+        lightbox.classList.add('opacity-0');
+        lightbox.setAttribute('aria-hidden', 'true');
+        setTimeout(() => {
+          lightbox.classList.add('hidden');
+          document.body.style.overflow = '';
+        }, 300);
+      };
+
+      window.goToLightbox = function(index) {
+        renderSlide(index);
+      };
+
+      window.prevLightbox = function(e) {
+        if (e) e.stopPropagation();
+        const prevIdx = (currentIndex - 1 + total) % total;
+        renderSlide(prevIdx);
+      };
+
+      window.nextLightbox = function(e) {
+        if (e) e.stopPropagation();
+        const nextIdx = (currentIndex + 1) % total;
+        renderSlide(nextIdx);
+      };
+
+      window.handleBackdropClick = function(e) {
+        if (e.target === e.currentTarget) {
+          closeLightbox();
+        }
+      };
+
+      // Keyboard Controls
+      document.addEventListener('keydown', (e) => {
+        if (!lightbox || lightbox.classList.contains('hidden')) return;
+        if (e.key === 'Escape') {
+          closeLightbox();
+        } else if (e.key === 'ArrowLeft') {
+          prevLightbox();
+        } else if (e.key === 'ArrowRight') {
+          nextLightbox();
+        }
+      });
+
+      // Mobile Touch Swipe Handling
+      const stage = document.getElementById('lightboxStage');
+      if (stage) {
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        stage.addEventListener('touchstart', (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+          touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        stage.addEventListener('touchend', (e) => {
+          const touchEndX = e.changedTouches[0].screenX;
+          const touchEndY = e.changedTouches[0].screenY;
+          const deltaX = touchEndX - touchStartX;
+          const deltaY = touchEndY - touchStartY;
+
+          if (Math.abs(deltaX) > 45 && Math.abs(deltaX) > Math.abs(deltaY)) {
+            if (deltaX > 0) {
+              prevLightbox();
+            } else {
+              nextLightbox();
+            }
+          }
+        }, { passive: true });
+      }
+    })();
+  </script>
+  {% endif %}
 
 </article>

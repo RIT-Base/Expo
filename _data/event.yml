@@ -1,15 +1,39 @@
-# Info Event yang Sedang Berlangsung (dimana website digunakan)
-current_name: "Kunjungan SMK Al-Madani"
-current_desc: "Tur kunjungan kampus dari SMK Al-Madani ke Universitas Garut."
-status: "active" # active / archive
-
-# 1. CAROUSEL (Karya Paling Top / Highlight Utama)
-# Masukkan slug (nama file tanpa .md)
+current_name: Katalog Karya Unggulan RIT
+current_desc: Pameran inovasi teknologi, robotika IoT, aplikasi web, dan game karya
+  mahasiswa RIT FKOMINFO UNIGA.
+status: active
 carousel_karya:
-  - "mozybit"
-  - "tes2"
-
-# 2. SEDANG TAMPIL (List Grid di bawah carousel)
+- mozybit
+- rit-oms
+- ctf-uts-fkom
+- raga
+- which-way
 current_karya:
-  - "mozybit"
-  - "tes2"
+- rit-oms
+- simka-karate
+- web-moody
+- ruasma
+- sikorlongar
+- mozybit
+- myhome
+- hese-iot
+- parker-iot
+- kinetix-labs
+- smart-waste-sorter
+- raga
+- riot-company
+- the-many-faces-of-me
+- which-way
+- conequest
+- ctf-uts-fkom
+- jadwal-fkominfo
+- rit-gq
+- rit-clr
+- rit-link
+- rit-mult
+- rit-infotech
+- rit-playground
+- lp-kolase-photobooth
+- online-invitation-guestbook
+- rize-photobooth-platform
+- rit-pkkmb-2026
