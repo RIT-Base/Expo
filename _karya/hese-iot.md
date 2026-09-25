@@ -2,7 +2,7 @@
 layout: karya
 title: HeSE (Health Safety Environment Scanner)
 slug: hese-iot
-author: Galih Pratama Herawan Putra
+author: Riefki Nugraha
 author_link: http://github.com/riefki-123
 author_image: '#'
 category: IoT

@@ -82,6 +82,8 @@ layout: default
           {% assign cat_lower = karya.category | downcase %}
           {% if cat_lower contains 'web' %}
             {% assign cat_badge = 'bg-blue-50 text-blue-700 border-blue-200' %}
+          {% elsif cat_lower contains 'mob' or cat_lower contains 'android' or cat_lower contains 'ios' %}
+            {% assign cat_badge = 'bg-amber-50 text-amber-700 border-amber-200' %}
           {% elsif cat_lower contains 'iot' %}
             {% assign cat_badge = 'bg-emerald-50 text-emerald-700 border-emerald-200' %}
           {% elsif cat_lower contains 'game' %}
@@ -169,6 +171,9 @@ layout: default
       <button class="filter-btn whitespace-nowrap px-5 py-2 rounded-full text-xs md:text-sm font-semibold bg-white text-slate-600 border border-slate-200 hover:border-blue-500 hover:text-blue-600 transition cursor-pointer" onclick="filterCategory('Web', this)">
         Web
       </button>
+      <button class="filter-btn whitespace-nowrap px-5 py-2 rounded-full text-xs md:text-sm font-semibold bg-white text-slate-600 border border-slate-200 hover:border-blue-500 hover:text-blue-600 transition cursor-pointer" onclick="filterCategory('Mobile', this)">
+        Mobile
+      </button>
       <button class="filter-btn whitespace-nowrap px-5 py-2 rounded-full text-xs md:text-sm font-semibold bg-white text-slate-600 border border-slate-200 hover:border-blue-500 hover:text-blue-600 transition cursor-pointer" onclick="filterCategory('IoT', this)">
         IoT
       </button>
@@ -186,6 +191,8 @@ layout: default
       {% assign cat_lower = karya.category | downcase %}
       {% if cat_lower contains 'web' %}
         {% assign item_badge = 'bg-blue-50 text-blue-700 border-blue-200' %}
+      {% elsif cat_lower contains 'mob' or cat_lower contains 'android' or cat_lower contains 'ios' %}
+        {% assign item_badge = 'bg-amber-50 text-amber-700 border-amber-200' %}
       {% elsif cat_lower contains 'iot' %}
         {% assign item_badge = 'bg-emerald-50 text-emerald-700 border-emerald-200' %}
       {% elsif cat_lower contains 'game' %}
@@ -293,6 +300,8 @@ layout: default
         matchCat = true;
       } else if (activeCategory === 'cyber security') {
         matchCat = itemCat.includes('cyber') || itemCat.includes('sec') || itemCat.includes('security');
+      } else if (activeCategory === 'mobile') {
+        matchCat = itemCat.includes('mob') || itemCat.includes('android') || itemCat.includes('ios');
       } else {
         matchCat = itemCat.includes(activeCategory);
       }

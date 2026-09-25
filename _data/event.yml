@@ -1,39 +1,13 @@
-current_name: Katalog Karya Unggulan RIT
-current_desc: Pameran inovasi teknologi, robotika IoT, aplikasi web, dan game karya
-  mahasiswa RIT FKOMINFO UNIGA.
-status: active
+current_name: "PKKMB FKOMINFO 2026"
+current_desc: "Pameran inovasi teknologi mahasiswa RIT FKOMINFO UNIGA dalam rangka menyambut mahasiswa baru pada PKKMB FKOMINFO 2026."
+status: "active"
 carousel_karya:
-- mozybit
-- rit-oms
-- ctf-uts-fkom
-- raga
-- which-way
+  - "rit-oms"
+  - "nutrigrow"
+  - "smart-farm"
+  - "ctf-uts-fkom"
 current_karya:
-- rit-oms
-- simka-karate
-- web-moody
-- ruasma
-- sikorlongar
-- mozybit
-- myhome
-- hese-iot
-- parker-iot
-- kinetix-labs
-- smart-waste-sorter
-- raga
-- riot-company
-- the-many-faces-of-me
-- which-way
-- conequest
-- ctf-uts-fkom
-- jadwal-fkominfo
-- rit-gq
-- rit-clr
-- rit-link
-- rit-mult
-- rit-infotech
-- rit-playground
-- lp-kolase-photobooth
-- online-invitation-guestbook
-- rize-photobooth-platform
-- rit-pkkmb-2026
+  - "rit-oms"
+  - "nutrigrow"
+  - "smart-farm"
+  - "ctf-uts-fkom"

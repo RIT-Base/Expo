@@ -8,6 +8,8 @@ layout: default
   {% assign cat_lower = page.category | downcase %}
   {% if cat_lower contains 'web' %}
     {% assign detail_cat_badge = 'bg-blue-50 text-blue-700 border-blue-200' %}
+  {% elsif cat_lower contains 'mob' or cat_lower contains 'android' or cat_lower contains 'ios' %}
+    {% assign detail_cat_badge = 'bg-amber-50 text-amber-700 border-amber-200' %}
   {% elsif cat_lower contains 'iot' %}
     {% assign detail_cat_badge = 'bg-emerald-50 text-emerald-700 border-emerald-200' %}
   {% elsif cat_lower contains 'game' %}
