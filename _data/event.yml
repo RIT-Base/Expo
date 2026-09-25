@@ -2,6 +2,7 @@ current_name: "PKKMB FKOMINFO 2026"
 current_desc: "Pameran inovasi teknologi mahasiswa RIT FKOMINFO UNIGA dalam rangka menyambut mahasiswa baru pada PKKMB FKOMINFO 2026."
 status: "active"
 carousel_karya:
+  - "mozybit"
   - "rit-oms"
   - "nutrigrow"
   - "smart-farm"
